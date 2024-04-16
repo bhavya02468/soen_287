@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find a Dog/Cat</title>
+    <link rel="stylesheet" href="js and css files/styles.css"> 
+
+    <style>
+        /* Add specific styles here if needed, or ensure they're included in your CSS file */
+        .error { color: red; margin-top: 5px; }
+        /* Assuming existing site structure styles are defined in style.css */
+    </style>
+</head>
+<body>
+ <header>
+    <a href="index.html">
+        <img src="js and css files/logo.jpg" alt="Pet Adoption Service Logo"> 
+        <span class="site-name">Pet Adoption Service</span>
+    </a>
+    <div id="dateTime" class="date-time"></div> <!-- Placeholder for the date and time -->
+</header>
+
+    <aside>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home page</a></li>
+                <li><a href="pets.html">Browse Available Pets</a></li>
+                <li><a href="find-pet.html">Find a dog/cat</a></li>
+                <li><a href="dog-care.html">Dog Care</a></li>
+                <li><a href="cat-care.html">Cat Care</a></li>
+                <li><a href="giveaway.html">Have a pet to give away</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main>
+        <h1>Find a Dog/Cat</h1>
+
+    <form id="findPetForm">
+        <label for="petType">Cat or Dog:</label>
+        <select id="petType" name="petType" required>
+            <option value="">Select One</option>
+            <option value="Dog">Dog</option>
+            <option value="Cat">Cat</option>
+        </select>
+
+        <label for="breed">Breed (doesn't matter option included):</label>
+        <input type="text" id="breed" name="breed" placeholder="Breed" required>
+
+        <label for="age">Preferred Age:</label>
+        <select id="age" name="age" required>
+            <option value="">Select One</option>
+            <option value="Puppy/Kitten">Puppy/Kitten</option>
+            <option value="Young">Young</option>
+            <option value="Adult">Adult</option>
+            <option value="Senior">Senior</option>
+            <option value="Doesn't matter">Doesn't matter</option>
+        </select>
+
+        <label for="gender">Preferred Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="">Select One</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Doesn't matter">Doesn't matter</option>
+        </select>
+
+        <label>Compatibility:</label>
+        <div>
+            <input type="checkbox" id="otherDogs" name="compatibility" value="Other Dogs">
+            <label for="otherDogs">Gets along with other dogs</label>
+        </div>
+        <div>
+            <input type="checkbox" id="otherCats" name="compatibility" value="Other Cats">
+            <label for="otherCats">Gets along with other cats</label>
+        </div>
+        <div>
+            <input type="checkbox" id="smallChildren" name="compatibility" value="Small Children">
+            <label for="smallChildren">Good with small children</label>
+        </div>
+
+        <button type="button" onclick="validateForm()">Submit</button>
+        <button type="reset">Clear</button>
+
+        <p id="errorMessage" class="error"></p>
+        
+    </form>
+</main>
+
+
+<footer>
+    <p>Your information will not be sold or misused. We take your privacy seriously.</p>
+    <p>Disclaimer: The information provided by pet owners is not verified by us. We are not responsible for any incorrect information.</p>
+    <a href="privacy.html">Privacy/Disclaimer Statement</a>
+</footer>
+<script src="js and css files/index.js"></script>
+
+    <script>
+        function validateForm() {
+            // Clear previous error messages
+            document.getElementById('errorMessage').innerText = '';
+
+            // Check if the required fields are filled
+            var petType = document.getElementById('petType').value;
+            var breed = document.getElementById('breed').value;
+            var age = document.getElementById('age').value;
+            var gender = document.getElementById('gender').value;
+
+            if (!petType || !breed || !age || !gender) {
+                document.getElementById('errorMessage').innerText = 'Please fill in all required fields.';
+                return false;
+            }
+
+            // If the form is valid, you can proceed with form submission or further validation here
+            alert('Form is valid!'); // Placeholder action
+        }
+    </script>
+
+</body>
+</html>

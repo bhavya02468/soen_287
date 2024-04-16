@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Have a Pet to Give Away</title>
+    <link rel="stylesheet" href="js and css files/styles.css"> 
+
+    <style>
+        .error { color: red; margin-top: 5px; }
+    </style>
+</head>
+<body>
+ <header>
+    <a href="index.html">
+        <img src="js and css files/logo.jpg" alt="Pet Adoption Service Logo"> 
+        <span class="site-name">Pet Adoption Service</span>
+    </a>
+    <div id="dateTime" class="date-time"></div> <!-- Placeholder for the date and time -->
+</header>
+
+    <aside>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home page</a></li>
+                <li><a href="pets.html">Browse Available Pets</a></li>
+                <li><a href="find-pet.html">Find a dog/cat</a></li>
+                <li><a href="dog-care.html">Dog Care</a></li>
+                <li><a href="cat-care.html">Cat Care</a></li>
+                <li><a href="giveaway.html">Have a pet to give away</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main>
+        <h1>Give a Pet Up for Adoption</h1>
+        <form id="giveAwayForm">
+            <label for="petType">Cat or Dog:</label>
+            <select id="petType" name="petType" required>
+                <option value="">Select One</option>
+                <option value="Dog">Dog</option>
+                <option value="Cat">Cat</option>
+            </select>
+
+            <label for="breed">Breed:</label>
+            <input type="text" id="breed" name="breed" placeholder="Breed or Mix" required>
+
+            <label for="age">Age of Animal:</label>
+            <select id="age" name="age" required>
+                <option value="">Select One</option>
+                <option value="Puppy/Kitten">Puppy/Kitten</option>
+                <option value="Young">Young</option>
+                <option value="Adult">Adult</option>
+                <option value="Senior">Senior</option>
+            </select>
+
+            <label for="gender">Animal Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="">Select One</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+
+            <div>
+                <input type="checkbox" id="otherDogs" name="otherDogs">
+                <label for="otherDogs">Gets along with other dogs</label>
+            </div>
+            <div>
+                <input type="checkbox" id="otherCats" name="otherCats">
+                <label for="otherCats">Gets along with other cats</label>
+            </div>
+            <div>
+                <input type="checkbox" id="smallChildren" name="smallChildren">
+                <label for="smallChildren">Suitable for a family with small children</label>
+            </div>
+
+            <label for="comment">Comment about the animal:</label>
+            <textarea id="comment" name="comment" required></textarea>
+
+            <label for="ownerName">Owner's Full Name:</label>
+            <input type="text" id="ownerName" name="ownerName" placeholder="Family and Given Name" required>
+
+            <label for="ownerEmail">Owner's Email:</label>
+            <input type="email" id="ownerEmail" name="ownerEmail" placeholder="email@example.com" required>
+
+            <button type="button" onclick="validateForm()">Submit</button>
+            <button type="reset">Clear</button>
+
+            <p id="errorMessage" class="error"></p>
+        </form>
+    </main>
+
+
+    
+    <script>
+        function validateForm() {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.innerText = ''; // Clear previous errors
+
+            // Validate required fields are not empty
+            const requiredFields = document.querySelectorAll('#giveAwayForm [required]');
+            for (let field of requiredFields) {
+                if (!field.value.trim()) {
+                    errorMessage.innerText = 'Please fill in all required fields.';
+                    return;
+                }
+            }
+
+            // Validate email format
+            const emailField = document.getElementById('ownerEmail');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email pattern
+            if (!emailRegex.test(emailField.value.trim())) {
+                errorMessage.innerText = 'Please enter a valid email address.';
+                return;
+            }
+
+            alert('Form is valid. Implement submission functionality here.');
+            // Implement submission functionality here
+        }
+    </script>
+    <footer>
+        <p>Your information will not be sold or misused. We take your privacy seriously.</p>
+        <p>Disclaimer: The content provided on this page is for informational purposes only and is not intended as veterinary advice. Consult a professional for your pet's specific needs.</p>
+        <a href="privacy.html">Privacy/Disclaimer Statement</a>
+    </footer>
+<script src="js and css files/index.js"></script>
+
+</body>
+</html>
