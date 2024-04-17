@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 
 // Additional Routes
 app.get('/home', (req, res) => {
-
+    res.render('index');
 
 });
 
