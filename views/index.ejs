@@ -1,0 +1,44 @@
+<%- include('header', { title: 'Find a Dog/Cat' }) %>
+
+<aside>
+    <nav>
+        <ul>
+            <li><a href="/home">Home page</a></li>
+            <li><a href="/find-pet">Find a dog/cat</a></li>
+            <li><a href="/dog-care">Dog Care</a></li>
+            <li><a href="/cat-care">Cat Care</a></li>
+            <li><a href="/giveaway">Have a pet to give away</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/createAccount">Create An Account</a></li>
+            <li><a onclick="logout()">Logout</a></li>
+
+        </ul>
+    </nav>
+</aside>
+
+<main>
+    <section class="welcome">
+        <h1>Welcome to Pet Adoption Service!</h1>
+        <p>Your new best friend is waiting for you. At Pet Adoption Service, we're committed to helping you find the perfect companion. Browse through profiles of adorable pets waiting for a forever home, learn about the adoption process, and read tips on pet care. Whether you're looking to adopt a dog, cat, or any other pet, we're here to support you every step of the way.</p>
+    </section>
+
+    <section class="features">
+        <h2>Why Choose Us?</h2>
+        <div class="feature">
+            <h3>Wide Variety of Pets</h3>
+            <p>From energetic puppies to calm and collected cats, find the pet that fits your lifestyle.</p>
+        </div>
+        <div class="feature">
+            <h3>Expert Advice</h3>
+            <p>Get tips from pet care experts on how to keep your new friend healthy and happy.</p>
+        </div>
+        <div class="feature">
+            <h3>Supporting Rescues</h3>
+            <p>Every adoption makes room for another rescue. Help us give every pet a chance at love.</p>
+        </div>
+    </section>
+</main>
+
+
+<script src="js and css files/index.js"></script>
+<%- include('footer') %>

@@ -1,0 +1,202 @@
+<%- include('header', { title: 'Find a Dog/Cat' }) %>
+
+
+
+    <aside>
+        <nav>
+            <ul>
+                       <li><a href="/home">Home page</a></li>
+            <li><a href="/find-pet">Find a dog/cat</a></li>
+            <li><a href="/dog-care">Dog Care</a></li>
+            <li><a href="/cat-care">Cat Care</a></li>
+            <li><a href="/giveaway">Have a pet to give away</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/createAccount">Create An Account</a></li>
+            <li><a onclick="logout()">Logout</a></li>
+
+            </ul>
+        </nav>
+    </aside>
+
+    <main>
+        <div id="loginSection">
+            <h2>Login to Continue</h2>
+            <form id="loginForm">
+                <label for="loginUsername">Username:</label>
+                <input type="text" id="loginUsername" required>
+        
+                <label for="loginPassword">Password:</label>
+                <input type="password" id="loginPassword" required>
+        
+                <button type="button" onclick="loginUser()">Login</button>
+                <p id="loginMessage" class="error"></p>
+            </form>
+        </div>
+        
+
+
+        <form id="giveAwayForm" style="display: none;" onsubmit="validateForm()">
+            <h1>Give a Pet Up for Adoption</h1>
+            <label for="petType">Cat or Dog:</label>
+            <select id="petType" name="petType" required>
+                <option value="">Select One</option>
+                <option value="Dog">Dog</option>
+                <option value="Cat">Cat</option>
+            </select>
+
+            <label for="breed">Breed:</label>
+            <input type="text" id="breed" name="breed" placeholder="Breed or Mix" required>
+
+            <label for="age">Age of Animal:</label>
+            <select id="age" name="age" required>
+                <option value="">Select One</option>
+                <option value="Puppy/Kitten">Puppy/Kitten</option>
+                <option value="Young">Young</option>
+                <option value="Adult">Adult</option>
+                <option value="Senior">Senior</option>
+            </select>
+
+            <label for="gender">Animal Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="">Select One</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+
+            
+        <label>Compatibility:</label>
+        <div>
+            <input type="checkbox" id="otherDogs" name="compatibility" value="Other Dogs">
+            <label for="otherDogs">Gets along with other dogs</label>
+        </div>
+        <div>
+            <input type="checkbox" id="otherCats" name="compatibility" value="Other Cats">
+            <label for="otherCats">Gets along with other cats</label>
+        </div>
+        <div>
+            <input type="checkbox" id="smallChildren" name="compatibility" value="Small Children">
+            <label for="smallChildren">Good with small children</label>
+        </div>
+
+
+            <label for="comment">Comment about the animal:</label>
+            <textarea id="comment" name="comment" required></textarea>
+
+            <label for="ownerName">Owner's Full Name:</label>
+            <input type="text" id="ownerName" name="ownerName" placeholder="Family and Given Name" required>
+
+            <label for="ownerEmail">Owner's Email:</label>
+            <input type="email" id="ownerEmail" name="ownerEmail" placeholder="email@example.com" required>
+
+            <button type="submit" >Submit</button>
+            <button type="reset">Clear</button>
+
+            <p id="errorMessage" class="error"></p>
+        </form>
+    </main>
+
+
+    
+    <script>
+        function validateForm() {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.innerText = ''; // Clear previous errors
+
+            // Validate required fields are not empty
+            const requiredFields = document.querySelectorAll('#giveAwayForm [required]');
+            for (let field of requiredFields) {
+                if (!field.value.trim()) {
+                    errorMessage.innerText = 'Please fill in all required fields.';
+                    return;
+                }
+            }
+
+            // Validate email format
+            const emailField = document.getElementById('ownerEmail');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email pattern
+            if (!emailRegex.test(emailField.value.trim())) {
+                errorMessage.innerText = 'Please enter a valid email address.';
+                return;
+            }
+
+            // Implement submission functionality here
+        }
+
+
+        function loginUser() {
+    const username = document.getElementById('loginUsername').value;
+    const password = document.getElementById('loginPassword').value;
+            localStorage.setItem("username",username)
+    fetch('/verify-login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            sessionStorage.setItem('isLoggedIn', 'true');
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('giveAwayForm').style.display = 'block';
+        } else {
+            document.getElementById('loginMessage').innerText = 'Login failed. Please try again.';
+        }
+    })
+    .catch(error => {
+        console.error('Error logging in:', error);
+        document.getElementById('loginMessage').innerText = 'Error logging in. Please try later.';
+    });
+}
+
+// Check if already logged in
+window.onload = () => {
+    if (sessionStorage.getItem('isLoggedIn') === 'true') {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('giveAwayForm').style.display = 'block';
+
+    }
+};
+
+document.getElementById('giveAwayForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+    if (sessionStorage.getItem('isLoggedIn') !== 'true') {
+        alert('Please log in to submit a pet.');
+        return;
+    }
+
+    const formData = new FormData(this);
+    const formObject = {username: localStorage.getItem("username")};
+
+    formData.forEach((value, key) => {
+        if (formObject.hasOwnProperty(key)) {
+            if (!Array.isArray(formObject[key])) {
+                formObject[key] = [formObject[key], value];
+            } else {
+                formObject[key].push(value);
+            }
+        } else {
+            formObject[key] = value;
+        }
+    });
+
+    try {
+       await fetch('/submit-pet', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formObject)
+        });
+        alert("Pet submitted successfully!");
+    } catch (error) {
+        console.error('Submission Error:', error);
+        alert("Failed to submit pet: " + error.message);
+    }
+});
+
+    </script>
+   
+<script src="js and css files/index.js"></script>
+<%- include('footer') %>

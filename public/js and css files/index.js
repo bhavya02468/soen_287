@@ -7,3 +7,7 @@
     setInterval(updateTime, 1000); // Update the time every second
     updateTime(); // Initialize the display
 
+function logout(){
+    sessionStorage.clear();
+    alert("logged out")
+}
