@@ -1,0 +1,21 @@
+1:Dog:Labrador:Young:Male:Other Dogs,Small Children
+2:Cat:Persian:Adult:Female:Other Cats
+3:Dog:Golden Retriever:Puppy:Female:Other Dogs
+4:Cat:Siamese:Senior:Male:Quiet Environments
+5:Dog:Beagle:Adult:Male:Other Dogs,Small Children
+6:Cat:Maine Coon:Young:Female:Other Cats,Other Dogs
+7:Dog:Boxer:Adult:Female:Other Dogs
+8:Cat:Sphynx:Young:Male:Other Cats
+9:Dog:French Bulldog:Puppy:Male:Small Children
+10:Cat:Bengal:Senior:Female:Quiet Environments
+11:Dog:Border Collie:Adult:Male:Other Dogs,Active Families
+12:Cat:Ragdoll:Kitten:Female:Other Cats,Other Dogs,Small Children
+13:Dog:Cocker Spaniel:Senior:Male:Quiet Environments
+14:Cat:Scottish Fold:Adult:Male:Other Cats
+15:Dog:Poodle:Young:Female:Other Dogs,Small Children,Active Families
+16:Cat:Russian Blue:Kitten:Male:Other Cats
+17:Dog:Shih Tzu:Senior:Female:Small Children
+18:Cat:Norwegian Forest Cat:Adult:Female:Other Cats,Other Dogs
+19:Dog:Labradoodle:Young:Male:Other Dogs,Small Children
+20:Cat:American Shorthair:Senior:Male:Quiet Environments
+21:bhavya:Dog:rrrr:Puppy/Kitten:Male:Other Cats,Small Children

@@ -1,0 +1,158 @@
+<%- include('header', { title: 'Find a Dog/Cat' }) %>
+
+    
+    
+    <aside>
+        <nav>
+            <ul>
+                       <li><a href="/home">Home page</a></li>
+            <li><a href="/find-pet">Find a dog/cat</a></li>
+            <li><a href="/dog-care">Dog Care</a></li>
+            <li><a href="/cat-care">Cat Care</a></li>
+            <li><a href="/giveaway">Have a pet to give away</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/createAccount">Create An Account</a></li>
+            <li><a onclick="logout()">Logout</a></li>
+                
+            </ul>
+        </nav>
+    </aside>
+    
+    <main>
+        <h1>Find a Dog/Cat</h1>
+        
+        <form id="findPetForm"  onsubmit="return validateForm()">
+            
+            <label for="petType">Cat or Dog:</label>
+            <select id="petType" name="petType" required>
+                <option value="">Select One</option>
+                <option value="Dog">Dog</option>
+                <option value="Cat">Cat</option>
+            </select>
+            
+            <label for="breed">Breed (doesn't matter option included):</label>
+            <input type="text" id="breed" name="breed" placeholder="Breed" required>
+            
+            <label for="age">Preferred Age:</label>
+            <select id="age" name="age" required>
+                <option value="">Select One</option>
+                <option value="Puppy/Kitten">Puppy/Kitten</option>
+                <option value="Young">Young</option>
+                <option value="Adult">Adult</option>
+                <option value="Senior">Senior</option>
+                <option value="Doesn't matter">Doesn't matter</option>
+            </select>
+            
+            <label for="gender">Preferred Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="">Select One</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Doesn't matter">Doesn't matter</option>
+            </select>
+            
+            <label>Compatibility:</label>
+            <div>
+                <input type="checkbox" id="otherDogs" name="compatibility" value="Other Dogs">
+                <label for="otherDogs">Gets along with other dogs</label>
+            </div>
+            <div>
+                <input type="checkbox" id="otherCats" name="compatibility" value="Other Cats">
+                <label for="otherCats">Gets along with other cats</label>
+            </div>
+            <div>
+                <input type="checkbox" id="smallChildren" name="compatibility" value="Small Children">
+                <label for="smallChildren">Good with small children</label>
+            </div>
+            
+            <button type="submit" >Submit</button>
+            <button type="reset">Clear</button>
+            
+            <p id="errorMessage" class="error"></p>
+            <div id="results"></div>
+        </form>
+    </main>
+    
+    
+    <script src="js and css files/index.js"></script>
+    
+    <script>
+        function validateForm() {
+            document.getElementById('errorMessage').innerText = '';
+            
+            var petType = document.getElementById('petType').value;
+            var breed = document.getElementById('breed').value;
+            var age = document.getElementById('age').value;
+            var gender = document.getElementById('gender').value;
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            
+            if (!petType || !breed || !age || !gender || checkboxes.length === 0) {
+                document.getElementById('errorMessage').innerText = 'Please fill in all required fields and select at least one compatibility option.';
+                return false;
+            }
+            
+            return true; // Form is valid
+        }
+        
+        
+        function displayResults(data) {
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = ''; // Clear previous results
+            
+            if (data && Array.isArray(data)) {
+                data.forEach(pet => {
+                    const petDiv = document.createElement('div');
+                    petDiv.textContent = `Type: ${pet.type}, Breed: ${pet.breed}, Age: ${pet.age}, Gender: ${pet.gender}, Compatibility: ${pet.compatibility}`;
+                    resultsContainer.appendChild(petDiv);
+                });
+            } else {
+                resultsContainer.textContent = 'No data found.';
+                
+            }
+        }
+        
+        document.getElementById('findPetForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            let object = {};
+            formData.forEach((value, key) => {
+                if (object.hasOwnProperty(key)) {
+                    if (!Array.isArray(object[key])) {
+                        object[key] = [object[key]];
+                    }
+                    object[key].push(value);
+                } else {
+                    object[key] = value;
+        }
+    });
+    
+    // Send the data using a fetch POST request
+    fetch('/search-pets', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(object)  // Ensure your object is converted to a JSON string
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();  // Parse the JSON in the response
+    })
+    .then(data => {
+        displayResults(data);  // Handle the data received from the server
+    })
+    .catch(error => {
+        console.error('Fetch Error:', error);
+        displayResults(null, error.message);  // Optionally handle errors in displayResults
+    });
+});
+
+// Parse the response JSON data
+
+
+// Update the result element with the response data
+
+</script>
+<%- include('footer') %>
